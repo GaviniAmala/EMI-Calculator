@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>To-Do List</title>
+        <link rel="stylesheet" href="../../node_modules/bootstrap-icons/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.css">
+        <style>
+            ul{
+                list-style-type:none;
+                width:100%;
+            }           
+            body{
+                display:flex;
+                justify-content: center;
+                align-items: center;
+                height:600px;
+                background-image: linear-gradient(AntiqueWhite,Blue,aqua);
+               
+            }
+            .input-group{
+                width:350px;
+            }
+            .input-group input{
+                width:300px;
+            }
+            .input-group button{
+                width:50px;
+            }
+            ul>li{
+                border:2px solid black;
+                padding:10px;
+                margin-left:-33px;
+                width:350px;
+                margin-top:2px;
+                border-radius:5px;
+                display: flex;
+                justify-content: space-between;
+            }
+            .btn-close{
+                color:red;
+            }
+        </style>
+        <script>
+            var arr=[];
+            function toDoList()
+            {                          
+              var item=document.getElementById("todolist").value;
+              var index=arr.indexOf(item.trim());
+              if(item.trim()=="")
+                alert("TO-DO List can't be empty");  
+               else if(index!=-1)               
+                alert(`${item} is already added`);
+              else{
+              arr.push(item.trim());
+              addListItems();
+              } 
+                          
+            }
+            function removeItem(i)
+            {
+                arr.splice(arr[i],1);
+                addListItems();
+            }            
+            function addListItems()
+            {
+                document.querySelector("ul").innerHTML="";
+                for(var i in arr){
+                var li=document.createElement("li");
+                var div=document.createElement("div");
+                var input=document.createElement("input");
+                var list=document.createElement("span");
+                list.textContent=`${arr[i]}`;
+                list.setAttribute("class","m-1");
+                input.setAttribute("type","checkbox");
+                input.setAttribute("name",`${arr[i]}`);
+                div.appendChild(input);
+                div.appendChild(list);
+                var button=document.createElement("button");
+                button.setAttribute("type","button");                
+                button.setAttribute("class", "btn btn-close ");                
+                button.setAttribute("onclick",`removeItem(${i})`);
+                button.setAttribute("id",`b-${i}`);
+                li.setAttribute("class","border border-2 border-primary")
+                li.appendChild(div);
+                li.appendChild(button);
+                document.querySelector("ul").appendChild(li);
+
+              }
+            }
+           
+        </script>
+    </head>
+    <body class="bg-primary" >
+        <div class="bg-white border border-2 border-primary  p-5">
+            <h3 class="text-center text-primary">TO-DO LIST</h3>
+            <div class="input-group">
+                <input type="text" name="todolist" id="todolist" class="border border-primary">
+                <button type="button" onclick="toDoList()" class="btn btn-primary">ADD</button>
+            </div>
+        <div>
+            <ul>
+
+            </ul>
+        </div>    
+        </div>
+        <script src="../../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+        <script src="../../node_modules/jquery/dist/jquery.js"></script>
+    </body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Hotel Registration Form</title>
+        <link rel="stylesheet" href="../../node_modules/bootstrap-icons/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.css">
+        <script>
+          var bal;
+          function hotelRegistration(){
+        
+        var name=document.getElementById("customerName").value;
+        var date=document.getElementById("checkInDetails").value;
+        var days=document.getElementById("noOfDays").value;
+        var persons=document.getElementById("noOfPersons").value; 
+        var duplex=document.getElementById("deluxRoom");
+        var suite=document.getElementById("suiteRoom");
+        var Ac=document.getElementById("AC");
+        var Locker=document.getElementById("Locker");
+        var advanceAmount=document.getElementById("advanceAmount").value;
+        var bool=duplex.checked+suite.checked;
+        var RoomType=duplex.checked?"Delux-2500":"Suite-4000";        
+        if(!name||!date||!days||!persons)
+        {
+          alert("Enter all the customer details");
+        }
+        else if(!bool){
+        alert("Select the room type");
+        }
+        else if(!advanceAmount)
+        {
+        alert("Advance Amount is compulsory");
+        }        
+        else {
+          document.getElementById("reg-5").style.display="block";
+          bal=duplex.checked?2500:4000;
+          if(Ac.checked){
+            bal +=1000;
+          }
+          if(Locker.checked)
+          {
+            bal+=1000;
+          }
+          bal=bal*days+(persons-2)*1000-advanceAmount;
+          var Amenities="Not selected";
+          if(Ac.checked)
+          Amenities ="AC";
+          if(Locker.checked)
+          Amenities +=" Locker";
+           document.getElementById("C_Name").innerHTML=name;
+           document.getElementById("C_In_Details").innerHTML=date;
+           document.getElementById("Days").innerHTML=days;
+           document.getElementById("People").innerHTML=persons;
+           document.getElementById("roomType").innerHTML=RoomType;
+           document.getElementById("amenities").innerHTML=Amenities;
+           document.getElementById("adv_Amount").innerHTML=advanceAmount;
+           document.getElementById("bal_Amount").innerHTML=bal;
+           
+        }
+        
+      }  
+      function displayNone()
+      {
+        document.getElementById("reg-5").style.display="none";
+      }     
+        </script>
+        <style>
+          dl{
+            display:grid;
+            grid-template-columns: 6fr 6fr;
+          }           
+          img{
+            width:300px;
+            height:200px;
+          }
+          .dis{
+            display:grid;
+            grid-template-columns: 6fr 6fr;
+          }
+          .modal{
+            display:none;
+          }
+        </style>
+    </head>
+    <body>
+        <h3 align="center">Hotel Registration Form</h3>
+        <div  class="bg-dark text-white text-xl-center p-2 m-2 " data-bs-toggle="collapse" data-bs-target="#reg-1">Customer Info</div>
+        <div class="customerInfo collapse" id="reg-1">
+            <dl class="p-4">
+                <dt><label for="customerName">Customer Name</label></dt>
+                <dd><input type="text" id="customerName" name="customerName"></dd> 
+                <dt><label for="CheckInDetails">Check In Details</label></dt>  
+                <dd><input type="date" id="checkInDetails" name="checkInDetails" style="width:29%"></dd> 
+                <dt><label for="noOfDays">Total No of Days</label></dt>        
+                <dd><input type="number" id="noOfDays" name="noOfDays"></dd>
+                <dt><label for="noOfPersons">Total No of persons</label></dt>
+                <dd><input type="number" id="noOfPersons" name="noOfPersons"></dd>
+            </dl>                                                                        
+        </div>
+        <div class="text-bg-dark text-lg-center p-2 m-2" data-bs-toggle="collapse" data-bs-target="#reg-2">Select Room Type</div>
+        <div class="collapse dis" id="reg-2">
+            <div class="ps-5">
+                <img src="../../public/images/delux room.jpg">
+                <br/>
+                <input type="radio" name="Room" value="deluxRoom" id="deluxRoom">Delux Room - &#8377;2500
+            </div>            
+            <div class="ps-5">
+                <img src="../../public/images/Suite Image.jpg">
+                <br/>
+                <input type="radio" name="Room" value="suiteRoom" id="suiteRoom" >Suite Room - &#8377;4000
+            </div>
+        </div>
+        <div class="text-bg-dark text-lg-center text-white p-2 m-2"  data-bs-toggle="collapse" data-bs-target="#reg-3">Select Amenities</div>
+        <div class="collapse dis " id="reg-3">
+          <div class="ps-5">
+            <img src="../../public/images/AC.jpg">
+            <br/>
+            <input type="checkbox" name="AC" value="AC" id="AC">AC- &#8377;1000
+          </div>
+          <div class="ps-5">
+            <img src="../../public/images/Locker.jpg">
+            <br/>
+            <input type="checkbox" name="locker" value="locker" id="Locker">Locker- &#8377;1000
+          </div>
+        </div>
+        <div class="text-bg-dark text-white text-lg-center p-2 m-2" data-bs-toggle="collapse" data-bs-target="#reg-4">Advance Amount</div>
+        <div class="collapse text-center m-2 p-2" id="reg-4">
+          <label for="advanceAmount" >Advance Amount</label>
+          <input type="number" id="advanceAmount" name="advanceAmount">
+        </div>
+        <div class="text-center">
+          <button type="button" onclick="hotelRegistration()"  class="bg-dark text-white p-2 m-2 rounded" data-bs-toggle="modal" data-bs-target="reg-5">Register</button>        
+        </div>
+        <div id="reg-5" class="modal w-25 bg-white text-dark">
+          <div class="modal-dialog mx-auto ">
+          <div class="modal-content">
+         <div class="modal-header text-center bg-dark text-white">
+          <h3>Customer Details</h3>
+          <button type="button" class="btn btn-close btn-close-white" onclick="displayNone()"  data-bs-dismiss="modal"></button>
+          </div>        
+          <dl class="modal-body">
+            <dt>Customer Name</dt>
+            <dd id="C_Name"></dd>
+            <dt>Check In Details</dt>
+            <dd id="C_In_Details"></dd>
+            <dt>Total No of days</dt>
+            <dd id="Days"></dd>
+            <dt>Total No of people</dt>
+            <dd id="People"></dd>
+            <dt>Room Type</dt>
+            <dd id="roomType"></dd>
+            <dt>Amenities</dt>
+            <dd id="amenities"></dd>
+            <dt>Advance Amount</dt>
+            <dd id="adv_Amount"></dd>
+            <dt>Balance Amount</dt>
+            <dd id="bal_Amount"></dd>
+          </dl>
+          </div>
+          </div>
+        </div>
+        <script src="../../node_modules/jquery/dist/jquery.js"></script>
+        <script src="../../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    </body>
+</html>
